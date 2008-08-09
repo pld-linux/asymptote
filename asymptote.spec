@@ -1,5 +1,6 @@
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
-Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz.
+Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
+Summary(pl.UTF-8):	Języka opisu grafiki wektorowej do technicznych rysunków
 Name:		asymptote
 Version:	1.43
 Release:	1
@@ -33,6 +34,11 @@ hasonló a MetaPost-hoz, de kibővítve C++-szerű szintaxissal.
 Asymptote még képes olyan szintű szövegszedésre is, amelyre a
 LaTeX képes a tudományos szöveggel.
 
+%description -l pl.UTF-8
+Asymptote jest językiem opisu grafiki wektorowej dla rysunków
+technicznych. Język ten jest inspirowany językiem MetaPost, ale
+posiada bogatszą składnię w stylu C++.
+
 %package doc
 Summary:	Asymptote documentation
 Group:		Documentation
@@ -41,13 +47,19 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 %description doc
 Asymptote documentation.
 
+%description doc -l pl.UTF-8
+Dokumentacja asymptote.
+
 %package examples
 Summary:	Asymptote examples
 Group:		Documentation
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description examples
-Asymptote documentation.
+Asymptote examples.
+
+%description examples -l pl.UTF-8
+Przykładowe pliki dla asymptote.
 
 %prep
 %setup -q
