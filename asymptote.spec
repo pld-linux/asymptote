@@ -1,6 +1,6 @@
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
-Summary(pl.UTF-8):	Języka opisu grafiki wektorowej do technicznych rysunków
+Summary(pl.UTF-8):	Język opisu grafiki wektorowej do technicznych rysunków
 Name:		asymptote
 Version:	1.43
 Release:	1
