@@ -10,6 +10,7 @@ Group:		X11/Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	8f85e1d9c455700f304960a8c5f7f113
 URL:		http://asymptote.sourceforge.net
+BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	ncurses-devel
@@ -65,13 +66,15 @@ Przykładowe pliki dla asymptote.
 %setup -q
 
 %build
+%{__autoheader}
+%{__autoconf}
 %configure \
 	CPPFLAGS=-I/usr/include/gc \
 	--disable-static \
 	--enable-gc=%{_includedir}/gc \
 	--with-docdir=%{_docdir}/%{name}-doc
 
-CPPFLAGS=-I/usr/include/gc %{__make}
+%{__make} all
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +82,6 @@ rm -rf $RPM_BUILD_ROOT
 # I don't know why need it - maybe the bad tetex configuration?
 # And the solution suggested by asympote's doc doesn't work too :(
 cp %{_datadir}/texmf/tex/{plain/pdfcolor/pdfcolor.tex,generic/epsf/epsf.tex,texinfo/texinfo.tex} doc
-%{__make} all
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}
