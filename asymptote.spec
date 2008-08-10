@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Języka opisu grafiki wektorowej do technicznych rysunków
 Name:		asymptote
 Version:	1.43
 Release:	1
-License:	GPL
+License:	GPL v3
 Group:		Applications/Science
 Group:		X11/Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
