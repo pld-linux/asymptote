@@ -1,15 +1,14 @@
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
-Summary(pl.UTF-8):	Język opisu grafiki wektorowej do technicznych rysunków
+Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	1.43
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
-Group:		X11/Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	8f85e1d9c455700f304960a8c5f7f113
-URL:		http://asymptote.sourceforge.net
+URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
 BuildRequires:	gsl-devel >= 1.7
@@ -42,6 +41,7 @@ posiada bogatszą składnię w stylu C++.
 
 %package doc
 Summary:	Asymptote documentation
+Summary(pl.UTF-8):	Dokumentacja do Asymptote
 Group:		Documentation
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -49,10 +49,11 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 Asymptote documentation.
 
 %description doc -l pl.UTF-8
-Dokumentacja asymptote.
+Dokumentacja do Asymptote.
 
 %package examples
 Summary:	Asymptote examples
+Summary(pl.UTF-8):	Przykłady do Asymptote
 Group:		Documentation
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -84,24 +85,25 @@ rm -rf $RPM_BUILD_ROOT
 cp %{_datadir}/texmf/tex/{plain/pdfcolor/pdfcolor.tex,generic/epsf/epsf.tex,texinfo/texinfo.tex} doc
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
 install -d $RPM_BUILD_ROOT%{_examplesdir}
-mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README TODO BUGS
 %attr(755,root,root) %{_bindir}/asy
 %attr(755,root,root) %{_bindir}/xasy
 %{_datadir}/%{name}
 %{_datadir}/texmf/tex/latex/asymptote
 %{_mandir}/man1/*
-%doc README TODO BUGS
 
 %files examples
 %defattr(644,root,root,755)
-%{_examplesdir}/%{name}
+%{_examplesdir}/%{name}-%{version}
 
 %files doc
 %defattr(644,root,root,755)
