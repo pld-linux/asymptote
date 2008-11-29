@@ -29,10 +29,10 @@ syntax. Asymptote provides for figures the same high-quality level of
 typesetting that LaTeX does for scientific text.
 
 %description -l hu.UTF-8
-Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz,
-hasonló a MetaPost-hoz, de kibővítve C++-szerű szintaxissal.
-Asymptote még képes olyan szintű szövegszedésre is, amelyre a
-LaTeX képes a tudományos szöveggel.
+Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz, hasonló
+a MetaPost-hoz, de kibővítve C++-szerű szintaxissal. Asymptote még
+képes olyan szintű szövegszedésre is, amelyre a LaTeX képes a
+tudományos szöveggel.
 
 %description -l pl.UTF-8
 Asymptote jest językiem opisu grafiki wektorowej dla rysunków
@@ -74,6 +74,7 @@ Przykładowe pliki dla asymptote.
 	--disable-static \
 	--enable-gc=%{_includedir}/gc \
 	--with-docdir=%{_docdir}/%{name}-doc
+cd doc && for i in %{_datadir}/texmf/tex/texinfo/*; do ln -s $i; done && cd ..
 
 %{__make} all
 
