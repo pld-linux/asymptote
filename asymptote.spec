@@ -2,12 +2,12 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.54
+Version:	1.57
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	b30cf54e1991889a399b95d6a9285d9b
+# Source0-md5:	48e54ce340a54d3cfc79f4170c62b60d
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
@@ -83,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # I don't know why need it - maybe the bad tetex configuration?
 # And the solution suggested by asympote's doc doesn't work too :(
-cp %{_datadir}/texmf/tex/{plain/pdfcolor/pdfcolor.tex,generic/epsf/epsf.tex,texinfo/texinfo.tex} doc
+# cp %{_datadir}/texmf/tex/{plain/pdfcolor/pdfcolor.tex,generic/epsf/epsf.tex,texinfo/texinfo.tex} doc
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -99,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/asy
 %attr(755,root,root) %{_bindir}/xasy
 %{_datadir}/%{name}
-%{_datadir}/texmf/tex/latex/asymptote
+%{_datadir}/texmf*/tex/latex/asymptote
 %{_mandir}/man1/*
 
 %files examples
