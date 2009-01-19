@@ -41,6 +41,7 @@ posiada bogatszą składnię w stylu C++.
 
 %package doc
 Summary:	Asymptote documentation
+Summary(hu.UTF-8):	Asymptote dokumentáció
 Summary(pl.UTF-8):	Dokumentacja do Asymptote
 Group:		Documentation
 Requires:	%{name} = %{epoch}:%{version}-%{release}
@@ -48,17 +49,24 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 %description doc
 Asymptote documentation.
 
+%description doc -l hu.UTF-8
+Asymptote dokumentációja.
+
 %description doc -l pl.UTF-8
 Dokumentacja do Asymptote.
 
 %package examples
 Summary:	Asymptote examples
+Summary(hu.UTF-8):	Asymptote példák
 Summary(pl.UTF-8):	Przykłady do Asymptote
 Group:		Documentation
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description examples
 Asymptote examples.
+
+%description examples -l hu.UTF-8
+Asymptote példák.
 
 %description examples -l pl.UTF-8
 Przykładowe pliki dla asymptote.
