@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	1.66
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
@@ -71,6 +71,29 @@ Asymptote példák.
 %description examples -l pl.UTF-8
 Przykładowe pliki dla asymptote.
 
+%package latex
+Summary:	LaTeX styles
+Summary(hu.UTF-8):	LaTeX stílusok
+Group:		Applications/Publishing/TeX
+
+%description latex
+LaTeX styles.
+
+%description latex -l hu.UTF-8
+LaTeX stílusok.
+
+%package gui
+Summary:	GUI for asymptote
+Summary(hu.UTF-8):	GUI asymptote-hoz
+Group:		Applications/Science
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description gui
+GUI for asymptote.
+
+%description gui -l hu.UTF-8
+GUI asymptote-hoz.
+
 %prep
 %setup -q
 
@@ -97,6 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf-local $RPM_BUILD_ROOT%{_datadir}/texmf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -105,10 +129,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README TODO BUGS
 %attr(755,root,root) %{_bindir}/asy
-%attr(755,root,root) %{_bindir}/xasy
 %{_datadir}/%{name}
-%{_datadir}/texmf*/tex/latex/asymptote
-%{_mandir}/man1/*
+%exclude %{_datadir}/%{name}/GUI
+%{_mandir}/man1/asy*
+
+%files gui
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/xasy
+%attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
+%{_datadir}/%{name}/GUI
+%{_mandir}/man1/xasy*
 
 %files examples
 %defattr(644,root,root,755)
@@ -117,3 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/%{name}-doc
+
+%files latex
+%defattr(644,root,root,755)
+%{_datadir}/texmf/tex/latex/asymptote
