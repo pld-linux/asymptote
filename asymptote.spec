@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	1.66
-Release:	2
+Release:	3
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
@@ -75,6 +75,7 @@ Przykładowe pliki dla asymptote.
 Summary:	LaTeX styles
 Summary(hu.UTF-8):	LaTeX stílusok
 Group:		Applications/Publishing/TeX
+Requires(post,postun):	%{_bindir}/texhash
 
 %description latex
 LaTeX styles.
@@ -93,6 +94,12 @@ GUI for asymptote.
 
 %description gui -l hu.UTF-8
 GUI asymptote-hoz.
+
+%post latex
+[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
+
+%postun latex
+[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
 
 %prep
 %setup -q
