@@ -127,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf-local $RPM_BUILD_ROOT%{_datadir}/texmf
+# %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf-local $RPM_BUILD_ROOT%{_datadir}/texmf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
