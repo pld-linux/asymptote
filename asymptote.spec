@@ -146,15 +146,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/asy
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/GUI
-%{_mandir}/man1/asy*
+%{_mandir}/man1/asy.1*
 
 %files gui
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/xasy
 %dir %{_datadir}/%{name}/GUI
 %attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
-%{_datadir}/%{name}/GUI/[!xasy.py]*
-%{_mandir}/man1/xasy*
+%{_datadir}/%{name}/GUI/[!x]*.py
+%{_mandir}/man1/xasy.1*
 
 %files doc
 %defattr(644,root,root,755)
