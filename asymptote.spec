@@ -39,6 +39,22 @@ Asymptote jest językiem opisu grafiki wektorowej dla rysunków
 technicznych. Język ten jest inspirowany językiem MetaPost, ale
 posiada bogatszą składnię w stylu C++.
 
+%package gui
+Summary:	GUI for asymptote
+Summary(hu.UTF-8):	GUI asymptote-hoz
+Summary(pl.UTF-8):	Graficzny interfejs do asymptote
+Group:		Applications/Science
+Requires:	%{name} = %{version}-%{release}
+
+%description gui
+GUI for asymptote.
+
+%description gui -l hu.UTF-8
+GUI asymptote-hoz.
+
+%description gui -l hu.UTF-8 -l pl.UTF-8
+Graficzny interfejs do asymptote.
+
 %package doc
 Summary:	Asymptote documentation
 Summary(hu.UTF-8):	Asymptote dokumentáció
@@ -74,6 +90,7 @@ Przykładowe pliki dla asymptote.
 %package latex
 Summary:	LaTeX styles
 Summary(hu.UTF-8):	LaTeX stílusok
+Summary(pl.UTF-8):	Style LaTeXa
 Group:		Applications/Publishing/TeX
 Requires(post,postun):	%{_bindir}/texhash
 
@@ -83,23 +100,8 @@ LaTeX styles.
 %description latex -l hu.UTF-8
 LaTeX stílusok.
 
-%package gui
-Summary:	GUI for asymptote
-Summary(hu.UTF-8):	GUI asymptote-hoz
-Group:		Applications/Science
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description gui
-GUI for asymptote.
-
-%description gui -l hu.UTF-8
-GUI asymptote-hoz.
-
-%post latex
-[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
-
-%postun latex
-[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
+%description latex -l pl.UTF-8
+Style LaTeXa.
 
 %prep
 %setup -q
@@ -132,6 +134,12 @@ mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post latex
+[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
+
+%postun latex
+[ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
+
 %files
 %defattr(644,root,root,755)
 %doc README TODO BUGS
@@ -148,13 +156,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/GUI/[!xasy.py]*
 %{_mandir}/man1/xasy*
 
-%files examples
-%defattr(644,root,root,755)
-%{_examplesdir}/%{name}-%{version}
-
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/%{name}-doc
+
+%files examples
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}-%{version}
 
 %files latex
 %defattr(644,root,root,755)
