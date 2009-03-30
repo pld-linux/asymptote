@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	1.68
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
@@ -16,9 +16,9 @@ BuildRequires:	ncurses-devel
 BuildRequires:	python
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	tetex-dvips
-BuildRequires:	tetex-format-latex
-BuildRequires:	tetex-tex-babel
+BuildRequires:	texlive-dvips
+BuildRequires:	texlive-latex
+BuildRequires:	texlive-tex-babel
 BuildRequires:	texinfo-texi2dvi
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
