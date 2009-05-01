@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	1.70
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
@@ -16,10 +16,10 @@ BuildRequires:	ncurses-devel
 BuildRequires:	python
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
+BuildRequires:	texinfo-texi2dvi
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-latex
 BuildRequires:	texlive-tex-babel
-BuildRequires:	texinfo-texi2dvi
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -103,6 +103,17 @@ LaTeX stílusok.
 %description latex -l pl.UTF-8
 Style LaTeXa.
 
+%package -n vim-syntax-asymptote
+Summary:	Vim syntax file to asy-files
+Summary(hu.UTF-8):	Vim syntax fájl asy fájlokhoz
+Group:		Applications/Editors/Vim
+
+%description -n vim-syntax-asymptote
+Vim syntax file to asy files.
+
+%description -n vim-syntax-asymptote -l hu.UTF-8
+Vim syntax fájl asy fájlokhoz.
+
 %prep
 %setup -q
 
@@ -130,6 +141,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 # %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf-local $RPM_BUILD_ROOT%{_datadir}/texmf
+
+install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -167,3 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 %files latex
 %defattr(644,root,root,755)
 %{_datadir}/texmf/tex/latex/asymptote
+
+%files -n vim-syntax-asymptote
+%defattr(644,root,root,755)
+%{_datadir}/vim/vimfiles/syntax
