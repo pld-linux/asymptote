@@ -1,0 +1,7 @@
+- on ppc:
+	In file included from prc/PRCbitStream.cc:27:
+	prc/PRCdouble.h:113: error: new declaration 'void* memrchr(const void*, int, size_t)'
+	/usr/include/string.h:116: error: ambiguates old declaration 'const void* memrchr(const void*, int, size_t)'
+	make: *** [prc/PRCbitStream.o] Error 1
+	error: Bad exit status from /tmp/B.ec8d54/rpm-tmp.48416 (%build)
+
