@@ -2,12 +2,12 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.75
+Version:	1.76
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	d4551b3b5f6ac9ac7478963af8ba1f3f
+# Source0-md5:	a0932f65baaadb43b651dce64b58e795
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
@@ -139,15 +139,11 @@ cd doc && for i in %{_datadir}/texmf/tex/texinfo/*; do ln -s $i; done && cd ..
 %install
 rm -rf $RPM_BUILD_ROOT
 
-# I don't know why need it - maybe the bad tetex configuration?
-# And the solution suggested by asympote's doc doesn't work too :(
-# cp %{_datadir}/texmf/tex/{plain/pdfcolor/pdfcolor.tex,generic/epsf/epsf.tex,texinfo/texinfo.tex} doc
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-# %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf-local $RPM_BUILD_ROOT%{_datadir}/texmf
 
 install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
