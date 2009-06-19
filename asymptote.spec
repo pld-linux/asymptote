@@ -2,13 +2,14 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.76
+Version:	1.77
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	a0932f65baaadb43b651dce64b58e795
+# Source0-md5:	5c8d4471ec0b0faa1f35be9dfe87320e
 URL:		http://asymptote.sourceforge.net/
+Patch0:		%{name}-doc-png-makefile.patch
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
 BuildRequires:	gsl-devel >= 1.7
@@ -123,6 +124,7 @@ Vim syntax fájl asy fájlokhoz.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__autoheader}
@@ -149,6 +151,9 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf{,-dist}
 
+%{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*,}
+%{__rm} -rf $RPM_BUILD_ROOT%{_infodir}/asymptote
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -161,6 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README TODO BUGS
+%{_infodir}/*.info.gz
 %attr(755,root,root) %{_bindir}/asy
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/GUI
