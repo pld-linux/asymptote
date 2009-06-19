@@ -1,0 +1,11 @@
+--- asymptote-1.77-orig/doc/png/Makefile.in 2009-06-08 04:11:06.000000000 +0200
++++ asymptote-1.77/doc/png/Makefile.in	2009-06-19 20:12:04.142714612 +0200
+@@ -20,7 +20,7 @@
+ 	makeinfo --html ../asymptote -o .
+ 
+ asymptote.info: $(SOURCE)
+-	makeinfo --no-split ../asymptote >& /dev/null
++	makeinfo --no-split ../asymptote &> /dev/null
+ 
+ info:	asymptote.info $(SOURCE)
+ 	makeinfo --no-split ../asymptote
