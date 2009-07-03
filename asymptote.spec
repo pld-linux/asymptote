@@ -134,7 +134,6 @@ Vim syntax fájl asy fájlokhoz.
 	--disable-static \
 	--enable-gc=%{_includedir}/gc \
 	--with-docdir=%{_docdir}/%{name}-doc
-cd doc && for i in %{_datadir}/texmf/tex/texinfo/*; do ln -s $i; done && cd ..
 
 %{__make} all
 
