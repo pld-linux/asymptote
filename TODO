@@ -1,7 +1,20 @@
 - on ppc:
-	In file included from prc/PRCbitStream.cc:27:
-	prc/PRCdouble.h:113: error: new declaration 'void* memrchr(const void*, int, size_t)'
-	/usr/include/string.h:116: error: ambiguates old declaration 'const void* memrchr(const void*, int, size_t)'
-	make: *** [prc/PRCbitStream.o] Error 1
-	error: Bad exit status from /tmp/B.ec8d54/rpm-tmp.48416 (%build)
+	texi2dvi --pdf asymptote.texi
+	This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7)
+	 file:line:error style messages enabled.
+	 %&-line parsing enabled.
+	entering extended mode
+	(./asymptote.texi (/usr/share/texmf-dist/tex/texinfo/texinfo.tex
+	Loading texinfo [version 2008-04-18.10]: pdf, fonts, page headings, tables,
+	conditionals, indexing, sectioning, toc, environments, defuns, macros,
+	cross references, insertions, (/usr/share/texmf-dist/tex/generic/epsf/epsf.tex
+	This is `epsf.tex' v2.7.3 <23 July 2005>
+	) localization, formatting, and turning on texinfo input format.)
+	(./version.texi) <./logo.pdf{/usr/share/texmf/fonts/map/pdftex/updmap/pdftex.ma
+	p}> [1pdfetex: asymptote: Invalid argument
+	/usr/bin/texi2dvi: pdfetex exited with bad status, quitting.
+	make[1]: *** [asymptote.pdf] Error 1
+	make[1]: Leaving directory `/home/users/builder/rpm/BUILD/asymptote-1.79/doc'
+	make: *** [man] Error 2
+	error: Bad exit status from /tmp/B.fb70fb/rpm-tmp.27216 (%build)
 
