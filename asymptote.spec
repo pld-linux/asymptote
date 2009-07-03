@@ -8,6 +8,7 @@ License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	beb6ef9a47322820b5e4ebfda0e4013b
+Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
@@ -123,6 +124,7 @@ Vim syntax fájl asy fájlokhoz.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__autoheader}
