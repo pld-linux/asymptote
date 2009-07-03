@@ -9,3 +9,14 @@
  #endif
  
  
+--- asymptote-1.79-orig/prc/PRCdouble.cc	2008-11-24 01:19:34.000000000 +0100
++++ asymptote-1.79/prc/PRCdouble.cc	2009-07-03 18:20:34.655952764 +0200
+@@ -23,7 +23,7 @@
+ }
+ 
+ #if defined(WORDS_BIG_ENDIAN)
+-void *memrchr(const void *buf,int c,size_t count)
++const void *memrchr(const void *buf,int c,size_t count)
+ {
+   unsigned char
+       *pcBuffer=(unsigned char *)buf,
