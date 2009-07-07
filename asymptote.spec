@@ -159,8 +159,10 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf{,-dist}
 
+%ifnarch ppc
 %{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*,}
 %{__rm} -rf $RPM_BUILD_ROOT%{_infodir}/asymptote
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -174,11 +176,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README TODO BUGS
+%ifnarch ppc
 %{_infodir}/*.info.gz
+%endif
 %attr(755,root,root) %{_bindir}/asy
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/GUI
+%ifnarch ppc
 %{_mandir}/man1/asy.1*
+%endif
 
 %files gui
 %defattr(644,root,root,755)
