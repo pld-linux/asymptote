@@ -192,7 +192,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/GUI
 %attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
 %{_datadir}/%{name}/GUI/[!x]*.py
+%ifnarch ppc
 %{_mandir}/man1/xasy.1*
+%endif
 
 %ifarch ppc
 # What should we do?
