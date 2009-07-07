@@ -2,12 +2,12 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.79
-Release:	1
+Version:	1.80
+Release:	0.9
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	beb6ef9a47322820b5e4ebfda0e4013b
+# Source0-md5:	1657cf5434a36e28ee192a5c984cbc94
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
@@ -135,7 +135,12 @@ Vim syntax fájl asy fájlokhoz.
 	--enable-gc=%{_includedir}/gc \
 	--with-docdir=%{_docdir}/%{name}-doc
 
+%ifarch ppc
+%{__make} asy
+%{__make} faq
+%else
 %{__make} all
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -179,9 +184,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/GUI/[!x]*.py
 %{_mandir}/man1/xasy.1*
 
+%ifarch ppc
+# What should we do?
+%else
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/%{name}-doc
+%endif
 
 %files examples
 %defattr(644,root,root,755)
