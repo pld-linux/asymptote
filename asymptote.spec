@@ -145,7 +145,11 @@ Vim syntax fájl asy fájlokhoz.
 %install
 rm -rf $RPM_BUILD_ROOT
 
+%ifarch ppc
+%{__make} install-asy \
+%else
 %{__make} install \
+%endif
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
