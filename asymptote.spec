@@ -19,6 +19,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	texinfo-texi2dvi
 BuildRequires:	texlive-dvips
+BuildRequires:	texlive-fonts-ams
 BuildRequires:	texlive-latex
 BuildRequires:	texlive-tex-babel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
