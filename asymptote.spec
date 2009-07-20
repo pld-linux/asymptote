@@ -12,6 +12,7 @@ Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	gc-devel >= 7.0
+BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	ncurses-devel
 BuildRequires:	python
