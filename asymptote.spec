@@ -2,12 +2,12 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.82
+Version:	1.83
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	0960360e00e8a1a6b84acb70f623ca72
+# Source0-md5:	1f3f0d25cb3ac31313115aee35af6190
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	autoconf
@@ -24,6 +24,8 @@ BuildRequires:	texlive-fonts-ams
 BuildRequires:	texlive-latex
 BuildRequires:	texlive-tex-babel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define texmfdist %{_datadir}/texmf-dist
 
 %description
 Asymptote is a powerful descriptive vector graphics language for
@@ -109,6 +111,8 @@ Style LaTeXa.
 %package context
 Summary:	ConTeXt color macros
 Group:		Applications/Publishing/TeX
+Requires(post,postun):	%{_bindir}/texhash
+Requires:	texlive-context
 
 %description context
 ConTeXt color macros.
@@ -160,6 +164,8 @@ mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}
 install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf{,-dist}
+%{__mv} $RPM_BUILD_ROOT%{texmfdist}/tex/context/{third,}/asymptote
+%{__rm} -rf $RPM_BUILD_ROOT%{texmfdist}/tex/context/third
 
 %ifnarch ppc
 %{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*,}
@@ -212,11 +218,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files latex
 %defattr(644,root,root,755)
-%{_datadir}/texmf-dist/tex/latex/asymptote
+%{texmfdist}/tex/latex/asymptote
 
 %files context
 %defattr(644,root,root,755)
-%{_datadir}/texmf-dist/tex/context/third/asymptote/colo-asy.tex
+# should be in texlive.spec
+%dir %{texmfdist}/tex/context
+%{texmfdist}/tex/context/asymptote
 
 %files -n vim-syntax-asymptote
 %defattr(644,root,root,755)
