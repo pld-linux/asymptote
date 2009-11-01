@@ -50,6 +50,7 @@ Summary(hu.UTF-8):	GUI asymptote-hoz
 Summary(pl.UTF-8):	Graficzny interfejs do asymptote
 Group:		Applications/Science
 Requires:	%{name} = %{version}-%{release}
+Requires:	python-tkinter
 
 %description gui
 GUI for asymptote.
