@@ -10,10 +10,14 @@ Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	fe47e212a6d585f9b28811ed095c6c27
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGL-glut-devel >= 4.0
 BuildRequires:	autoconf
+BuildRequires:	fftw3-devel
 BuildRequires:	gc-devel >= 7.0
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
+BuildRequires:	libstdc++-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	python
 BuildRequires:	readline-devel
@@ -22,7 +26,9 @@ BuildRequires:	texinfo-texi2dvi
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-fonts-ams
 BuildRequires:	texlive-latex
-BuildRequires:	texlive-tex-babel
+#BuildRequires:	texlive-tex-babel
+BuildRequires:	zlib-devel
+Requires:	OpenGL-glut >= 4.0
 Suggests:	ImageMagick-coder-dot
 Suggests:	ImageMagick-coder-jpeg
 Suggests:	ImageMagick-coder-png
