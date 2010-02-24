@@ -11,7 +11,7 @@ Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	OpenGL-glut-devel >= 4.0
+BuildRequires:	OpenGL-glut-devel
 BuildRequires:	autoconf
 BuildRequires:	fftw3-devel
 BuildRequires:	gc-devel >= 7.0
@@ -28,7 +28,6 @@ BuildRequires:	texlive-fonts-ams
 BuildRequires:	texlive-latex
 #BuildRequires:	texlive-tex-babel
 BuildRequires:	zlib-devel
-Requires:	OpenGL-glut >= 4.0
 Suggests:	ImageMagick-coder-dot
 Suggests:	ImageMagick-coder-jpeg
 Suggests:	ImageMagick-coder-png
