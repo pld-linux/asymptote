@@ -2,12 +2,12 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	1.97
+Version:	1.98
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
-Source0:	http://dl.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	ac8edf42808496ff179f83ef7fbc7891
+Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
+# Source0-md5:	f7e1c4f93501614adeb62bf9e8bd1282
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
