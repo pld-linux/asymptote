@@ -195,7 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README TODO BUGS
 %ifnarch ppc
-%{_infodir}/*.info.gz
+%{_infodir}/*.info*
 %endif
 %attr(755,root,root) %{_bindir}/asy
 %{_datadir}/%{name}
