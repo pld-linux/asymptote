@@ -1,22 +1,22 @@
---- asymptote-1.87-orig/prc/PRCdouble.cc	2009-09-20 07:28:23.000000000 +0200
-+++ asymptote-1.87/prc/PRCdouble.cc	2009-09-28 23:28:48.070083578 +0200
-@@ -23,7 +23,7 @@
- }
+--- asymptote-2.13/prc/PRCdouble.cc~	2011-06-19 15:40:51.000000000 +0200
++++ asymptote-2.13/prc/PRCdouble.cc	2011-06-20 08:40:37.743723350 +0200
+@@ -24,7 +24,7 @@
  
  #ifdef WORDS_BIGENDIAN
+ #ifndef HAVE_MEMRCHR
 -void *memrchr(const void *buf,int c,size_t count)
 +const void *memrchr(const void *buf,int c,size_t count)
  {
    unsigned char
        *pcBuffer=(unsigned char *)buf,
---- asymptote-1.87-orig/prc/PRCdouble.h	2009-09-20 07:28:23.000000000 +0200
-+++ asymptote-1.87/prc/PRCdouble.h	2009-09-28 23:28:24.637377760 +0200
-@@ -106,7 +106,7 @@
- int stCOFDOECompare(const void*,const void*);
+--- asymptote-2.13/prc/PRCdouble.h~	2011-06-19 15:40:51.000000000 +0200
++++ asymptote-2.13/prc/PRCdouble.h	2011-06-20 08:44:40.604913141 +0200
+@@ -133,7 +133,7 @@
  
  #ifdef WORDS_BIGENDIAN
+ #ifndef HAVE_MEMRCHR
 -void *memrchr(const void *,int,size_t);
 +const void *memrchr(const void *,int,size_t);
  #endif
- 
+ #endif
  
