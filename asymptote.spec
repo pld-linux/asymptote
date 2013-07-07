@@ -2,17 +2,19 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.16
+Version:	2.23
 Release:	1
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	8504bae74bbaf589f9d7684736b358a1
+# Source0-md5:	b6e5a8e6c24e27eff42d5476072218bc
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
+#BuildRequires:	Mesa-libglapi-devel
 BuildRequires:	autoconf
 BuildRequires:	fftw3-devel
 BuildRequires:	gc-devel >= 7.0
+BuildRequires:	gc-c++-devel >= 7.0
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	libstdc++-devel
@@ -147,9 +149,7 @@ Vim syntax fájl asy fájlokhoz.
 %{__autoheader}
 %{__autoconf}
 %configure \
-	CPPFLAGS=-I/usr/include/gc \
-	--disable-static \
-	--enable-gc=%{_includedir}/gc \
+	--enable-gc \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %ifarch ppc
@@ -176,11 +176,11 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf{,-dist}
 %{__mv} $RPM_BUILD_ROOT%{texmfdist}/tex/context/{third,}/asymptote
-%{__rm} -rf $RPM_BUILD_ROOT%{texmfdist}/tex/context/third
+%{__rm} -r $RPM_BUILD_ROOT%{texmfdist}/tex/context/third
 
 %ifnarch ppc
 %{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*,}
-%{__rm} -rf $RPM_BUILD_ROOT%{_infodir}/asymptote
+%{__rm} -r $RPM_BUILD_ROOT%{_infodir}/asymptote
 %endif
 
 %clean
@@ -211,6 +211,17 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/GUI
 %attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
 %{_datadir}/%{name}/GUI/[!x]*.py
+%{_datadir}/%{name}/GUI/xasy2asy.py
+%{_datadir}/%{name}/GUI/xasyActions.py
+%{_datadir}/%{name}/GUI/xasyBezierEditor.py
+%{_datadir}/%{name}/GUI/xasyCodeEditor.py
+%{_datadir}/%{name}/GUI/xasyColorPicker.py
+%{_datadir}/%{name}/GUI/xasyFile.py
+%{_datadir}/%{name}/GUI/xasyGUIIcons.py
+%{_datadir}/%{name}/GUI/xasyMainWin.py
+%{_datadir}/%{name}/GUI/xasyOptions.py
+%{_datadir}/%{name}/GUI/xasyOptionsDialog.py
+%{_datadir}/%{name}/GUI/xasyVersion.py
 %ifnarch ppc
 %{_mandir}/man1/xasy.1*
 %endif
