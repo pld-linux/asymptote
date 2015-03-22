@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.23
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
@@ -185,6 +185,12 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
+%postun	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %post latex
 [ ! -x %{_bindir}/texhash ] || %{_bindir}/texhash 1>&2
