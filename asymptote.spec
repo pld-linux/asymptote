@@ -3,12 +3,13 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.35
-Release:	3
+Release:	4
 License:	GPL v3
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	199e971792072527bd0cb1583d8ef3fb
 Patch0:		%{name}-memrchr.patch
+Patch1:		gsl2.patch
 URL:		http://asymptote.sourceforge.net/
 #BuildRequires:	Mesa-libglapi-devel
 BuildRequires:	autoconf
@@ -144,6 +145,7 @@ Vim syntax fájl asy fájlokhoz.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__autoheader}
