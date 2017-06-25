@@ -2,26 +2,31 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.35
-Release:	5
-License:	GPL v3
+Version:	2.41
+Release:	1
+# uses GPL libraries (gsl, readline), so final license is GPL
+License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	199e971792072527bd0cb1583d8ef3fb
+# Source0-md5:	d16909a9189a3177ad2f8cb8161e32e1
 Patch0:		%{name}-memrchr.patch
-Patch1:		gsl2.patch
 URL:		http://asymptote.sourceforge.net/
-#BuildRequires:	Mesa-libglapi-devel
-BuildRequires:	autoconf
-BuildRequires:	fftw3-devel
+BuildRequires:	Mesa-libOSMesa-devel
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGL-devel
+BuildRequires:	OpenGL-glut-devel
+BuildRequires:	autoconf >= 2.50
+BuildRequires:	bison
+BuildRequires:	fftw3-devel >= 3
+BuildRequires:	flex
 BuildRequires:	gc-devel >= 7.0
 BuildRequires:	gc-c++-devel >= 7.0
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	ncurses-devel
-BuildRequires:	python
-BuildRequires:	readline-devel
+BuildRequires:	python >= 2
+BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
 BuildRequires:	texinfo-texi2dvi
 BuildRequires:	texlive-dvips
@@ -124,6 +129,7 @@ Style LaTeXa.
 
 %package context
 Summary:	ConTeXt color macros
+Summary(pl.UTF-8):	Makra kolorów ConTeXta
 Group:		Applications/Publishing/TeX
 Requires(post,postun):	%{_bindir}/texhash
 Requires:	texlive-context
@@ -131,9 +137,13 @@ Requires:	texlive-context
 %description context
 ConTeXt color macros.
 
+%description context -l pl.UTF-8
+Makra kolorów ConTeXta.
+
 %package -n vim-syntax-asymptote
 Summary:	Vim syntax file to asy-files
 Summary(hu.UTF-8):	Vim syntax fájl asy fájlokhoz
+Summary(pl.UTF-8):	Plik składni Vima dla plików asy
 Group:		Applications/Editors/Vim
 
 %description -n vim-syntax-asymptote
@@ -142,16 +152,18 @@ Vim syntax file to asy files.
 %description -n vim-syntax-asymptote -l hu.UTF-8
 Vim syntax fájl asy fájlokhoz.
 
+%description -n vim-syntax-asymptote -l pl.UTF-8
+Plik składni Vima dla plików asy.
+
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-%{__autoheader}
 %{__autoconf}
+%{__autoheader}
 %configure \
-	--enable-gc \
+	--enable-gc=system \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %ifarch ppc
@@ -172,17 +184,17 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
-mv $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/{asymptote/asy.vim,vim/vimfiles/syntax}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/asymptote/*.vim $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/texmf{,-dist}
 %{__mv} $RPM_BUILD_ROOT%{texmfdist}/tex/context/{third,}/asymptote
 %{__rm} -r $RPM_BUILD_ROOT%{texmfdist}/tex/context/third
 
 %ifnarch ppc
-%{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*,}
-%{__rm} -r $RPM_BUILD_ROOT%{_infodir}/asymptote
+%{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*.info,}
+rmdir $RPM_BUILD_ROOT%{_infodir}/asymptote
 %endif
 
 %clean
@@ -202,15 +214,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README TODO BUGS
-%ifnarch ppc
-%{_infodir}/*.info*
-%endif
+%doc BUGS ChangeLog README ReleaseNotes TODO
 %attr(755,root,root) %{_bindir}/asy
-%{_datadir}/%{name}
-%exclude %{_datadir}/%{name}/GUI
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/*.asy
+%{_datadir}/%{name}/asymptote.py
+%{_datadir}/%{name}/nopapersize.ps
+%{_datadir}/%{name}/reload.js
+# to emacs package?
+%{_datadir}/%{name}/asy*.el
+# kate package?
+%{_datadir}/%{name}/asy-kate.sh
 %ifnarch ppc
 %{_mandir}/man1/asy.1*
+%{_infodir}/asy-faq.info*
+%{_infodir}/asymptote.info*
 %endif
 
 %files gui
@@ -234,9 +252,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xasy.1*
 %endif
 
-%ifarch ppc
-# What should we do?
-%else
+%ifnarch ppc
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/%{name}-doc
@@ -252,10 +268,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files context
 %defattr(644,root,root,755)
-# should be in texlive.spec
-%dir %{texmfdist}/tex/context
 %{texmfdist}/tex/context/asymptote
 
 %files -n vim-syntax-asymptote
 %defattr(644,root,root,755)
-%{_datadir}/vim/vimfiles/syntax
+%{_datadir}/vim/vimfiles/syntax/asy.vim
+%{_datadir}/vim/vimfiles/syntax/asy_filetype.vim
