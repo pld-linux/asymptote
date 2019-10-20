@@ -2,13 +2,13 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.41
-Release:	2
+Version:	2.59
+Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	d16909a9189a3177ad2f8cb8161e32e1
+# Source0-md5:	d43d86b6e80faa7364ab57a6161ac1d0
 Patch0:		%{name}-memrchr.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	Mesa-libOSMesa-devel
@@ -19,8 +19,8 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	bison
 BuildRequires:	fftw3-devel >= 3
 BuildRequires:	flex
-BuildRequires:	gc-devel >= 7.0
 BuildRequires:	gc-c++-devel >= 7.0
+BuildRequires:	gc-devel >= 7.0
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	libstdc++-devel >= 6:4.7
@@ -28,7 +28,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	python >= 2
 BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
-BuildRequires:	texinfo-texi2dvi
+BuildRequires:	texinfo-texi2dvi >= 6.7
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-fonts-ams
 BuildRequires:	texlive-format-pdflatex
@@ -225,6 +225,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/asy*.el
 # kate package?
 %{_datadir}/%{name}/asy-kate.sh
+%{_datadir}/asymptote/shaders
+%{_datadir}/asymptote/webgl
 %ifnarch ppc
 %{_mandir}/man1/asy.1*
 %{_infodir}/asy-faq.info*
@@ -237,17 +239,30 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/GUI
 %attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
 %{_datadir}/%{name}/GUI/[!x]*.py
-%{_datadir}/%{name}/GUI/xasy2asy.py
-%{_datadir}/%{name}/GUI/xasyActions.py
-%{_datadir}/%{name}/GUI/xasyBezierEditor.py
-%{_datadir}/%{name}/GUI/xasyCodeEditor.py
-%{_datadir}/%{name}/GUI/xasyColorPicker.py
-%{_datadir}/%{name}/GUI/xasyFile.py
-%{_datadir}/%{name}/GUI/xasyGUIIcons.py
-%{_datadir}/%{name}/GUI/xasyMainWin.py
-%{_datadir}/%{name}/GUI/xasyOptions.py
-%{_datadir}/%{name}/GUI/xasyOptionsDialog.py
-%{_datadir}/%{name}/GUI/xasyVersion.py
+%{_datadir}/asymptote/GUI/xasy2asy.py
+%{_datadir}/asymptote/GUI/xasyArgs.py
+%{_datadir}/asymptote/GUI/xasyBezierInterface.py
+%{_datadir}/asymptote/GUI/xasyFile.py
+%{_datadir}/asymptote/GUI/xasyOptions.py
+%{_datadir}/asymptote/GUI/xasyStrings.py
+%{_datadir}/asymptote/GUI/xasySvg.py
+%{_datadir}/asymptote/GUI/xasyTransform.py
+%{_datadir}/asymptote/GUI/xasyUtils.py
+%{_datadir}/asymptote/GUI/xasyValidator.py
+%{_datadir}/asymptote/GUI/xasyVersion.py
+%dir %{_datadir}/asymptote/GUI/configs
+%{_datadir}/asymptote/GUI/configs/xasyconfig.cson
+%{_datadir}/asymptote/GUI/configs/xasykeymap.cson
+%dir %{_datadir}/asymptote/GUI/pyUIClass
+%{_datadir}/asymptote/GUI/pyUIClass/custMatTransform.py
+%{_datadir}/asymptote/GUI/pyUIClass/labelTextEditor.py
+%{_datadir}/asymptote/GUI/pyUIClass/setCustomAnchor.py
+%{_datadir}/asymptote/GUI/pyUIClass/widg_addLabel.py
+%{_datadir}/asymptote/GUI/pyUIClass/widg_addPolyOpt.py
+%{_datadir}/asymptote/GUI/pyUIClass/widg_editBezier.py
+%{_datadir}/asymptote/GUI/pyUIClass/widgetPointEditor.py
+%{_datadir}/asymptote/GUI/pyUIClass/window1.py
+%{_datadir}/asymptote/GUI/res
 %ifnarch ppc
 %{_mandir}/man1/xasy.1*
 %endif
