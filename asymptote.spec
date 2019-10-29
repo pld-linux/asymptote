@@ -1,16 +1,19 @@
+# TODO: OpenImageIO? (--enable-openimageio)
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.59
-Release:	1
+Release:	2
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	d43d86b6e80faa7364ab57a6161ac1d0
 Patch0:		%{name}-memrchr.patch
+Patch1:		%{name}-info.patch
 URL:		http://asymptote.sourceforge.net/
+BuildRequires:	GLM
 BuildRequires:	Mesa-libOSMesa-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
@@ -19,8 +22,8 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	bison
 BuildRequires:	fftw3-devel >= 3
 BuildRequires:	flex
-BuildRequires:	gc-c++-devel >= 7.0
-BuildRequires:	gc-devel >= 7.0
+BuildRequires:	gc-c++-devel >= 8.0.4
+BuildRequires:	gc-devel >= 8.0.4
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	libstdc++-devel >= 6:4.7
@@ -28,6 +31,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	python >= 2
 BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
+BuildRequires:	texinfo
 BuildRequires:	texinfo-texi2dvi >= 6.7
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-fonts-ams
@@ -158,12 +162,14 @@ Plik składni Vima dla plików asy.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__autoconf}
 %{__autoheader}
 %configure \
 	--enable-gc=system \
+	--enable-offscreen \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %ifarch ppc

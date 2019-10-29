@@ -1,0 +1,14 @@
+--- asymptote-2.59/doc/asymptote.texi.orig	2019-10-20 06:39:42.000000000 +0200
++++ asymptote-2.59/doc/asymptote.texi	2019-10-29 05:40:59.716812295 +0100
+@@ -21,9 +21,9 @@
+ @end quotation
+ @end copying
+      
+-@dircategory Languages
++@dircategory Graphics Utilities:
+ @direntry
+-* asymptote: (asymptote/asymptote). Vector graphics language.
++* asymptote: (asymptote/asymptote).	Vector graphics language
+ @end direntry
+ 
+ @titlepage
