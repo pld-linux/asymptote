@@ -1,3 +1,10 @@
+#
+# Conditional build:
+%bcond_without	doc		# do not build and package API docs
+#
+%ifarch ppc %{ix86}
+%undefine	with_doc
+%endif
 # TODO: OpenImageIO? (--enable-openimageio)
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
@@ -172,20 +179,20 @@ Plik składni Vima dla plików asy.
 	--enable-offscreen \
 	--with-docdir=%{_docdir}/%{name}-doc
 
-%ifarch ppc
+%if %{with doc}
+%{__make} all
+%else
 %{__make} asy
 %{__make} faq
-%else
-%{__make} all
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ifarch ppc
-%{__make} install-asy \
-%else
+%if %{with doc}
 %{__make} install \
+%else
+%{__make} install-asy \
 %endif
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -198,7 +205,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %{__mv} $RPM_BUILD_ROOT%{texmfdist}/tex/context/{third,}/asymptote
 %{__rm} -r $RPM_BUILD_ROOT%{texmfdist}/tex/context/third
 
-%ifnarch ppc
+%if %{with doc}
 %{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*.info,}
 rmdir $RPM_BUILD_ROOT%{_infodir}/asymptote
 %endif
@@ -233,7 +240,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/asy-kate.sh
 %{_datadir}/asymptote/shaders
 %{_datadir}/asymptote/webgl
-%ifnarch ppc
+%if %{with doc}
 %{_mandir}/man1/asy.1*
 %{_infodir}/asy-faq.info*
 %{_infodir}/asymptote.info*
@@ -269,11 +276,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/asymptote/GUI/pyUIClass/widgetPointEditor.py
 %{_datadir}/asymptote/GUI/pyUIClass/window1.py
 %{_datadir}/asymptote/GUI/res
-%ifnarch ppc
+%if %{with doc}
 %{_mandir}/man1/xasy.1*
 %endif
 
-%ifnarch ppc
+%if %{with doc}
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/%{name}-doc
