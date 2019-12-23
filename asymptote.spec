@@ -78,10 +78,11 @@ Summary(hu.UTF-8):	GUI asymptote-hoz
 Summary(pl.UTF-8):	Graficzny interfejs do asymptote
 Group:		Applications/Science
 Requires:	%{name} = %{version}-%{release}
+# rsvg-convert utility
+Requires:	librsvg >= 2.40
 Requires:	python3-PyQt5 >= 5.11
 Requires:	python3-cson >= 0.7
 Requires:	python3-numpy >= 1:1.11.0
-Requires:	python3-rsvg-convert >= 2.42.3
 
 %description gui
 GUI for asymptote.
