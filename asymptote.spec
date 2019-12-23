@@ -1,30 +1,29 @@
 #
 # Conditional build:
-%bcond_without	doc		# do not build and package API docs
+%bcond_without	doc	# API documentation
+%bcond_without	oiio	# OpenImageIO support
 #
-%ifarch ppc %{ix86}
-%undefine	with_doc
-%endif
-# TODO: OpenImageIO? (--enable-openimageio)
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.59
-Release:	4
+Version:	2.61
+Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	d43d86b6e80faa7364ab57a6161ac1d0
+# Source0-md5:	38fa6c77881a006c1b5b22f382ac8d8b
 Patch0:		%{name}-memrchr.patch
 Patch1:		%{name}-info.patch
+Patch2:		%{name}-no-env.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	GLM
 BuildRequires:	Mesa-libOSMesa-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	OpenGL-glut-devel
+%{?with_oiio:BuildRequires:	OpenImageIO-devel}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	bison
 BuildRequires:	fftw3-devel >= 3
@@ -35,9 +34,9 @@ BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	ncurses-devel
-BuildRequires:	python >= 2
 BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 BuildRequires:	texinfo-texi2dvi >= 6.7
 BuildRequires:	texlive-dvips
@@ -79,7 +78,10 @@ Summary(hu.UTF-8):	GUI asymptote-hoz
 Summary(pl.UTF-8):	Graficzny interfejs do asymptote
 Group:		Applications/Science
 Requires:	%{name} = %{version}-%{release}
-Requires:	python-tkinter
+Requires:	python3-PyQt5 >= 5.11
+Requires:	python3-cson >= 0.7
+Requires:	python3-numpy >= 1:1.11.0
+Requires:	python3-rsvg-convert >= 2.42.3
 
 %description gui
 GUI for asymptote.
@@ -170,11 +172,22 @@ Plik składni Vima dla plików asy.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+# use direct shebang
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' GUI/xasy.py
+# actually not executable, contain bogus shebang
+%{__sed} -i -e '1d' GUI/configs/*.py \
+	GUI/{CustMatTransform,DebugFlags,GuidesManager,InplaceAddObj,PrimitiveShape,SetCustomAnchor,Widg_*,Window1,__init__,labelEditor,xasy?*}.py
+# only some examples to execute
+%{__sed} -i -e '1d' GUI/UndoRedoStack.py base/asymptote.py
 
 %build
 %{__autoconf}
 %{__autoheader}
+# there is "unknown option" warning for openimageio because AC_ARG_ENABLE specifies wrong name (not the one actually used)
 %configure \
+	%{?with_oiio:--enable-openimageio} \
 	--enable-gc=system \
 	--enable-offscreen \
 	--with-docdir=%{_docdir}/%{name}-doc
@@ -195,6 +208,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install-asy \
 %endif
 	DESTDIR=$RPM_BUILD_ROOT
+
+# useless at runtime
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/asymptote/GUI/setup.py
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
