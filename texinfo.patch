@@ -1,0 +1,11 @@
+--- asymptote-2.70/doc/asymptote.texi~	2021-12-03 21:25:33.000000000 +0100
++++ asymptote-2.70/doc/asymptote.texi	2021-12-03 21:27:46.836315745 +0100
+@@ -4,8 +4,6 @@
+ @include version.texi
+ @finalout
+ 
+-@codequoteundirected on
+-
+ @copying
+ This file documents @code{Asymptote}, version @value{VERSION}.
+ 

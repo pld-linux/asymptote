@@ -7,16 +7,17 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.61
+Version:	2.70
 Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	38fa6c77881a006c1b5b22f382ac8d8b
+# Source0-md5:	b57e685568a7cca69024a86c7276eb6d
 Patch0:		%{name}-memrchr.patch
 Patch1:		%{name}-info.patch
 Patch2:		%{name}-no-env.patch
+Patch3:		texinfo.patch
 URL:		http://asymptote.sourceforge.net/
 BuildRequires:	GLM
 BuildRequires:	Mesa-libOSMesa-devel
@@ -174,6 +175,7 @@ Plik składni Vima dla plików asy.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # use direct shebang
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' GUI/xasy.py
