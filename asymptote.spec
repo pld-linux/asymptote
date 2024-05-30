@@ -19,7 +19,7 @@ Patch1:		%{name}-info.patch
 Patch2:		%{name}-no-env.patch
 Patch3:		texinfo.patch
 URL:		http://asymptote.sourceforge.net/
-BuildRequires:	GLM
+BuildRequires:	GLM-devel
 BuildRequires:	Mesa-libOSMesa-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
