@@ -1,19 +1,19 @@
 #
 # Conditional build:
-%bcond_without	doc	# API documentation
+%bcond_with	doc	# API documentation
 %bcond_without	oiio	# OpenImageIO support
 #
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.70
+Version:	2.89
 Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	b57e685568a7cca69024a86c7276eb6d
+# Source0-md5:	905c100fc40b4af24ebf7398b8cce2b7
 Patch0:		%{name}-memrchr.patch
 Patch1:		%{name}-info.patch
 Patch2:		%{name}-no-env.patch
@@ -177,13 +177,15 @@ Plik składni Vima dla plików asy.
 %patch2 -p1
 %patch3 -p1
 
-# use direct shebang
-%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' GUI/xasy.py
 # actually not executable, contain bogus shebang
 %{__sed} -i -e '1d' GUI/configs/*.py \
 	GUI/{CustMatTransform,DebugFlags,GuidesManager,InplaceAddObj,PrimitiveShape,SetCustomAnchor,Widg_*,Window1,__init__,labelEditor,xasy?*}.py
 # only some examples to execute
 %{__sed} -i -e '1d' GUI/UndoRedoStack.py base/asymptote.py
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
+      GUI/ContextWindow.py \
+      GUI/xasy.py
 
 %build
 %{__autoconf}
@@ -192,7 +194,7 @@ Plik składni Vima dla plików asy.
 %configure \
 	%{?with_oiio:--enable-openimageio} \
 	--enable-gc=system \
-	--enable-offscreen \
+	--disable-offscreen \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %if %{with doc}
