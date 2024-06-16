@@ -212,6 +212,7 @@ Plik składni Vima dla plików asy.
 %else
 %{__make} asy
 %{__make} faq
+%{__make} -C doc asy.1
 %endif
 
 %install
@@ -239,6 +240,9 @@ install -d $RPM_BUILD_ROOT%{_datadir}/vim/vimfiles/syntax
 %if %{with doc}
 %{__mv} $RPM_BUILD_ROOT%{_infodir}/{asymptote/*.info,}
 rmdir $RPM_BUILD_ROOT%{_infodir}/asymptote
+%else
+install -Dp doc/asy.1 $RPM_BUILD_ROOT%{_mandir}/man1/asy.1
+install -Dp doc/xasy.1x $RPM_BUILD_ROOT%{_mandir}/man1/xasy.1x
 %endif
 
 %clean
@@ -271,8 +275,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/asy-kate.sh
 %{_datadir}/asymptote/shaders
 %{_datadir}/asymptote/webgl
-%if %{with doc}
 %{_mandir}/man1/asy.1*
+%if %{with doc}
 %{_infodir}/asy-faq.info*
 %{_infodir}/asymptote.info*
 %endif
@@ -307,9 +311,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/asymptote/GUI/pyUIClass/widgetPointEditor.py
 %{_datadir}/asymptote/GUI/pyUIClass/window1.py
 %{_datadir}/asymptote/GUI/res
-%if %{with doc}
 %{_mandir}/man1/xasy.1*
-%endif
 
 %if %{with doc}
 %files doc
