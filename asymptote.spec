@@ -1,7 +1,9 @@
+# TODO: system glew, LspCpp and its dependencies (rapidjson, uri, utfcpp)?
 #
 # Conditional build:
-%bcond_with	doc	# API documentation
+%bcond_with	doc	# API documentation (requires 2020+ LaTeX)
 %bcond_without	oiio	# OpenImageIO support
+%bcond_without	osmesa	# offscreen support
 #
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
@@ -12,28 +14,35 @@ Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
-Source0:	http://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
+Source0:	https://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
 # Source0-md5:	905c100fc40b4af24ebf7398b8cce2b7
 Patch0:		%{name}-memrchr.patch
 Patch1:		%{name}-info.patch
 Patch2:		%{name}-no-env.patch
 Patch3:		texinfo.patch
-URL:		http://asymptote.sourceforge.net/
+Patch4:		%{name}-osmesa.patch
+URL:		https://asymptote.sourceforge.net/
 BuildRequires:	GLM-devel
-BuildRequires:	Mesa-libOSMesa-devel
+%{?with_osmesa:BuildRequires:	Mesa-libOSMesa-devel}
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	OpenGL-devel
+BuildRequires:	OpenGL-GLX-devel
+BuildRequires:	OpenGL-devel >= 4.3
 BuildRequires:	OpenGL-glut-devel
 %{?with_oiio:BuildRequires:	OpenImageIO-devel}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	bison
+# boost_filesystem boost_thread
+BuildRequires:	boost-devel
+BuildRequires:	curl-devel
+BuildRequires:	eigen3 >= 3
 BuildRequires:	fftw3-devel >= 3
 BuildRequires:	flex
-BuildRequires:	gc-c++-devel >= 8.0.4
-BuildRequires:	gc-devel >= 8.0.4
+BuildRequires:	gc-c++-devel >= 8.2.4
+BuildRequires:	gc-devel >= 8.2.4
 BuildRequires:	ghostscript
 BuildRequires:	gsl-devel >= 1.7
-BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libstdc++-devel >= 6:5
+BuildRequires:	libtirpc-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
@@ -176,6 +185,7 @@ Plik składni Vima dla plików asy.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # actually not executable, contain bogus shebang
 %{__sed} -i -e '1d' GUI/configs/*.py \
@@ -194,7 +204,7 @@ Plik składni Vima dla plików asy.
 %configure \
 	%{?with_oiio:--enable-openimageio} \
 	--enable-gc=system \
-	--disable-offscreen \
+	--enable-offscreen%{!?with_osmesa:=no} \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %if %{with doc}

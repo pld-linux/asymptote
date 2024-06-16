@@ -1,0 +1,34 @@
+--- asymptote-2.89/glrender.h.orig	2024-03-23 22:30:22.000000000 +0100
++++ asymptote-2.89/glrender.h	2024-06-15 08:35:31.186777653 +0200
+@@ -44,6 +44,9 @@
+ #endif
+ 
+ #ifdef HAVE_LIBOSMESA
++#ifndef APIENTRY
++#define APIENTRY
++#endif
+ #include <GL/osmesa.h>
+ #endif
+ 
+@@ -61,6 +64,9 @@
+ #endif
+ 
+ #ifdef HAVE_LIBOSMESA
++#ifndef APIENTRY
++#define APIENTRY
++#endif
+ #include <GL/osmesa.h>
+ #endif
+ 
+--- asymptote-2.89/GL/glew.c.orig	2024-03-23 22:30:22.000000000 +0100
++++ asymptote-2.89/GL/glew.c	2024-06-15 15:10:28.971729067 +0200
+@@ -37,6 +37,9 @@
+ #endif
+ 
+ #if defined(GLEW_OSMESA)
++#  ifndef APIENTRY
++#    define APIENTRY
++#  endif
+ #  define GLAPI extern
+ #  include <GL/osmesa.h>
+ #elif defined(GLEW_EGL)
