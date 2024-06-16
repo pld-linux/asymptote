@@ -10,7 +10,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.89
-Release:	2
+Release:	3
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
@@ -61,6 +61,9 @@ Suggests:	ImageMagick-coder-jpeg
 Suggests:	ImageMagick-coder-png
 # e.g. "label" command needs latex
 Suggests:	texlive-latex
+%if %{without doc}
+Obsoletes:	asymptote-doc < %{version}-%{release}
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define texmfdist %{_datadir}/texmf-dist
