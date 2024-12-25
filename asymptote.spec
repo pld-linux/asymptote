@@ -10,7 +10,7 @@ Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokho
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.89
-Release:	3
+Release:	4
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
