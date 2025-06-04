@@ -184,11 +184,11 @@ Plik składni Vima dla plików asy.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
+%patch -P 2 -p1
+%patch -P 3 -p1
+%patch -P 4 -p1
 
 # actually not executable, contain bogus shebang
 %{__sed} -i -e '1d' GUI/configs/*.py \
