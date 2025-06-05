@@ -3,14 +3,14 @@
 # Conditional build:
 %bcond_with	doc	# API documentation (requires 2020+ LaTeX)
 %bcond_without	oiio	# OpenImageIO support
-%bcond_without	osmesa	# offscreen support
+%bcond_with	osmesa	# offscreen support
 #
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
 Version:	2.89
-Release:	6
+Release:	7
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
