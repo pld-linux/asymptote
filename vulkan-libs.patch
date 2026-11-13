@@ -1,0 +1,20 @@
+--- asymptote-3.15/configure.ac.orig	2026-09-14 06:35:15.000000000 +0200
++++ asymptote-3.15/configure.ac	2026-11-12 10:20:53.865189416 +0100
+@@ -552,15 +552,8 @@
+           AC_CHECK_LIB([vulkan], [vkCreateInstance],
+           [
+           LIBS_SAVE=$LIBS
+-          case "$OSTYPE" in
+-               darwin*)
+-                 VULKAN_LIBS=""
+-               ;;
+-               *)
+-                 VULKAN_LIBS="-lMachineIndependent -lOSDependent -lGenericCodeGen "
+-               ;;
+-          esac
+-          ASY_VULKAN_LIBS="-lvulkan $VULKAN_LIBS-lSPIRV"
++          VULKAN_LIBS=""
++          ASY_VULKAN_LIBS="-lvulkan $VULKAN_LIBS -lSPIRV"
+           dnl On some distros (e.g., Ubuntu) libglslang.a is a thin C wrapper and
+           dnl the actual C++ implementation is in companion libraries. Try -lglslang
+           dnl alone first; if that fails, try with companions.

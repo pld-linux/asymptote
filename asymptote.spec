@@ -9,18 +9,15 @@ Summary:	Asymptote is a powerful descriptive vector graphics language for techni
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
 Name:		asymptote
-Version:	2.89
-Release:	7
+Version:	3.15
+Release:	1
 # uses GPL libraries (gsl, readline), so final license is GPL
 License:	GPL v3+ (LGPL v3+ code)
 Group:		Applications/Science
 Source0:	https://downloads.sourceforge.net/asymptote/%{name}-%{version}.src.tgz
-# Source0-md5:	905c100fc40b4af24ebf7398b8cce2b7
-Patch0:		%{name}-memrchr.patch
-Patch1:		%{name}-info.patch
-Patch2:		%{name}-no-env.patch
-Patch3:		texinfo.patch
-Patch4:		%{name}-osmesa.patch
+# Source0-md5:	829f01a698f77ac8018d3b732ae18190
+Patch0:		%{name}-info.patch
+Patch1:		vulkan-libs.patch
 URL:		https://asymptote.sourceforge.net/
 BuildRequires:	GLM-devel
 %{?with_osmesa:BuildRequires:	Mesa-libOSMesa-devel}
@@ -184,21 +181,16 @@ Plik składni Vima dla plików asy.
 
 %prep
 %setup -q
-%patch -P 0 -p1
-%patch -P 1 -p1
-%patch -P 2 -p1
-%patch -P 3 -p1
-%patch -P 4 -p1
-
-# actually not executable, contain bogus shebang
-%{__sed} -i -e '1d' GUI/configs/*.py \
-	GUI/{CustMatTransform,DebugFlags,GuidesManager,InplaceAddObj,PrimitiveShape,SetCustomAnchor,Widg_*,Window1,__init__,labelEditor,xasy?*}.py
-# only some examples to execute
-%{__sed} -i -e '1d' GUI/UndoRedoStack.py base/asymptote.py
+%patch -P0 -p1
+%patch -P1 -p1
 
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
-      GUI/ContextWindow.py \
-      GUI/xasy.py
+     GUI/ContextWindow.py \
+     GUI/xasy.py \
+     base/asymptote.py
+
+# actually not executable, contain bogus shebang
+%{__sed} -i -e '0,/env python/{/env python/d}' GUI/*.py
 
 %build
 %{__autoconf}
@@ -220,6 +212,7 @@ Plik składni Vima dla plików asy.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 %if %{with doc}
 %{__make} install \
@@ -228,8 +221,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 	DESTDIR=$RPM_BUILD_ROOT
 
-# useless at runtime
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/asymptote/GUI/setup.py
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/%{name}/lib*.so $RPM_BUILD_ROOT%{_libdir}/%{name}/
+for f in $RPM_BUILD_ROOT%{_libdir}/%{name}/lib*.so ; do
+	ln -sr $f $RPM_BUILD_ROOT%{_datadir}/%{name}
+done
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/%{name}-doc/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -267,7 +262,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS ChangeLog README ReleaseNotes TODO
 %attr(755,root,root) %{_bindir}/asy
+%dir %{_libdir}/%{name}
+%{_libdir}/asymptote/libasyopengl.so
+%{_libdir}/asymptote/libasyvulkan.so
 %dir %{_datadir}/%{name}
+%{_datadir}/asymptote/libasyopengl.so
+%{_datadir}/asymptote/libasyvulkan.so
+%{_datadir}/%{name}/collections
 %{_datadir}/%{name}/*.asy
 %{_datadir}/%{name}/asymptote.py
 %{_datadir}/%{name}/nopapersize.ps
@@ -290,30 +291,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/GUI
 %attr(755,root,root) %{_datadir}/%{name}/GUI/xasy.py
 %{_datadir}/%{name}/GUI/[!x]*.py
-%{_datadir}/asymptote/GUI/xasy2asy.py
-%{_datadir}/asymptote/GUI/xasyArgs.py
-%{_datadir}/asymptote/GUI/xasyBezierInterface.py
-%{_datadir}/asymptote/GUI/xasyFile.py
-%{_datadir}/asymptote/GUI/xasyOptions.py
-%{_datadir}/asymptote/GUI/xasyStrings.py
-%{_datadir}/asymptote/GUI/xasySvg.py
-%{_datadir}/asymptote/GUI/xasyTransform.py
-%{_datadir}/asymptote/GUI/xasyUtils.py
-%{_datadir}/asymptote/GUI/xasyValidator.py
-%{_datadir}/asymptote/GUI/xasyVersion.py
-%dir %{_datadir}/asymptote/GUI/configs
-%{_datadir}/asymptote/GUI/configs/xasyconfig.cson
-%{_datadir}/asymptote/GUI/configs/xasykeymap.cson
-%dir %{_datadir}/asymptote/GUI/pyUIClass
-%{_datadir}/asymptote/GUI/pyUIClass/custMatTransform.py
-%{_datadir}/asymptote/GUI/pyUIClass/labelTextEditor.py
-%{_datadir}/asymptote/GUI/pyUIClass/setCustomAnchor.py
-%{_datadir}/asymptote/GUI/pyUIClass/widg_addLabel.py
-%{_datadir}/asymptote/GUI/pyUIClass/widg_addPolyOpt.py
-%{_datadir}/asymptote/GUI/pyUIClass/widg_editBezier.py
-%{_datadir}/asymptote/GUI/pyUIClass/widgetPointEditor.py
-%{_datadir}/asymptote/GUI/pyUIClass/window1.py
+%{_datadir}/asymptote/GUI/xasy[0-9A-Z]*.py
+%{_datadir}/asymptote/GUI/configs
 %{_datadir}/asymptote/GUI/res
+%{_datadir}/asymptote/GUI/xasyicons
+%{_datadir}/asymptote/GUI/xasyqtui
+%{_datadir}/asymptote/GUI/xasyversion
 %{_mandir}/man1/xasy.1*
 
 %if %{with doc}
