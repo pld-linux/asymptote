@@ -1,10 +1,14 @@
 # TODO: system glew, LspCpp and its dependencies (rapidjson, uri, utfcpp)?
 #
 # Conditional build:
-%bcond_with	doc	# API documentation (requires 2020+ LaTeX)
-%bcond_without	oiio	# OpenImageIO support
-%bcond_with	osmesa	# offscreen support
+%bcond_with	doc		# API documentation (requires 2020+ LaTeX)
+%bcond_without	oiio		# OpenImageIO support
+%bcond_without	vulkan		# offscreen support
 #
+%ifarch %{ix86} x32
+%undefine	with_vulkan
+%endif
+
 Summary:	Asymptote is a powerful descriptive vector graphics language for technical drawing
 Summary(hu.UTF-8):	Asymptote egy leíró vektorgrafikus nyelv technikai rajzokhoz
 Summary(pl.UTF-8):	Język opisu grafiki wektorowej do rysunków technicznych
@@ -37,10 +41,12 @@ BuildRequires:	flex
 BuildRequires:	gc-c++-devel >= 8.2.4
 BuildRequires:	gc-devel >= 8.2.4
 BuildRequires:	ghostscript
+BuildRequires:	glfw-devel
 BuildRequires:	gsl-devel >= 1.7
 BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtirpc-devel
 BuildRequires:	ncurses-devel
+BuildRequires:	python3-PySide6
 BuildRequires:	readline-devel >= 4.3
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
@@ -197,9 +203,9 @@ Plik składni Vima dla plików asy.
 %{__autoheader}
 # there is "unknown option" warning for openimageio because AC_ARG_ENABLE specifies wrong name (not the one actually used)
 %configure \
+	--enable-vulkan%{!?with_vulkan:=no} \
 	%{?with_oiio:--enable-openimageio} \
 	--enable-gc=system \
-	--enable-offscreen%{!?with_osmesa:=no} \
 	--with-docdir=%{_docdir}/%{name}-doc
 
 %if %{with doc}
@@ -264,10 +270,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/asy
 %dir %{_libdir}/%{name}
 %{_libdir}/asymptote/libasyopengl.so
-%{_libdir}/asymptote/libasyvulkan.so
+%{?with_vulkan:%{_libdir}/asymptote/libasyvulkan.so}
 %dir %{_datadir}/%{name}
 %{_datadir}/asymptote/libasyopengl.so
-%{_datadir}/asymptote/libasyvulkan.so
+%{?with_vulkan:%{_datadir}/asymptote/libasyvulkan.so}
 %{_datadir}/%{name}/collections
 %{_datadir}/%{name}/*.asy
 %{_datadir}/%{name}/asymptote.py
